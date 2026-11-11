@@ -7,7 +7,7 @@
 <p>Hope you like this test!</p>
 <p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
 <div>
-    <p>Here are your bookings:</p>
+    <p>Here are all bookings:</p>
     {#if data.bookings.length == 0}
         <p>No bookings found</p>
     {:else}
