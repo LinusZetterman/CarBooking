@@ -67,4 +67,4 @@ jobs:
 
       - name: Deploy
         run: |
-          ssh -v -i ~/.ssh/id_ed25519 $REMOTE "touch /var/www/car-booking-app/testar.txt"
+          ssh $REMOTE "touch /var/www/car-booking-app/testar.txt"
