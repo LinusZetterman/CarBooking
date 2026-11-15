@@ -65,5 +65,6 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           echo | ssh-keyscan -H ${{secrets.DEPLOY_HOST}} >> ~/.ssh/known_hosts
 
-          echo success!
-          echo ~/.ssh/know_hosts
+      - name: Deploy
+        run: |
+          ssh $REMOTE "touch ~testar.txt"
