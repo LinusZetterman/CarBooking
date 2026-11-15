@@ -63,7 +63,7 @@ jobs:
           echo 1
           install -m 755 -d ~/.ssh
           echo 2
-          echo -v ${{secrets.DEPLOY_SSH_KEY}} > ~/.ssh/id_ed25519
+          echo -v "${{secrets.DEPLOY_SSH_KEY}}" > ~/.ssh/id_ed25519
           echo 3
           chmod 600 ~/.ssh/id_ed25519
           echo 4
