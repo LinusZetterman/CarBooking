@@ -67,6 +67,6 @@ jobs:
 
       - name: Upload release
         run: |
-          RELEASE="$(date +%Y%m%d-%H%M%S)_${GITHUB_SHA::7}"
+          RELEASE="$(date +%Y%m%d-%H%M%S)-${GITHUB_SHA::7}"
           ssh $REMOTE "mkdir -p $APP_PATH/releases/$RELEASE"
           rsync -az --delete release/ $APP_PATH/releases/$RELEASE/
