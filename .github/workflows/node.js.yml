@@ -69,4 +69,4 @@ jobs:
         run: |
           RELEASE="$(date +%Y%m%d-%H%M%S)-${GITHUB_SHA::7}"
           ssh $REMOTE "mkdir -p $APP_PATH/releases/$RELEASE"
-          rsync -v -az --delete release/ $APP_PATH/releases/$RELEASE/
+          rsync --verbose -az --delete release/ $APP_PATH/releases/$RELEASE/
