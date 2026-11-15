@@ -63,7 +63,7 @@ jobs:
           install -m 755 -d ~/.ssh
           echo "${{secrets.DEPLOY_SSH_KEY}}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          echo | ssh-keyscan -H "${{secrets.DEPLOY_HOST}}" >> ~/.ssh/known_hosts
+          echo | ssh-keyscan -H ${{secrets.DEPLOY_HOST}} >> ~/.ssh/known_hosts
 
           echo success!
           echo ~/.ssh/know_hosts
