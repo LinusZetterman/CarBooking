@@ -30,4 +30,40 @@ jobs:
       - run: npm run build --if-present
         env:
           DATABASE_URL: ${{ vars.DATABASE_URL }}
-    # - run: npm test
+      # - run: npm test
+
+      - name: Assemble release
+        run: |
+          mkdir release
+          cp -r build package.json package-lock.json release/
+          cp -r deploy release/deploy
+
+      - uses: actions/download-artifacts@4
+        with:
+          name: release
+          path: release
+          retention-days: 3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      APP_PATH: /var/www/car-booking-app
+      REMOTE: ${{secrets.DEPLOY_USER}}@${{secrets.DEPLOY_HOST}}
+
+    steps:
+      - uses: actions/download-artifact@4
+        with:
+          name: release
+          path: release
+
+      - name: Configure ssh
+        run: |
+          install -m 755 -d ~/.ssh
+          echo ${{secrets.DEPLOY_SSH_KEY}} > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo | ssh-keyscan -H ${{secrets.SSH_HOST}} >> ~/.ssh/known_hosts
+
+          echo success!
+          echo ~/.ssh/know_hosts
