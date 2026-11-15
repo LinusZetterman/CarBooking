@@ -51,7 +51,7 @@ jobs:
     env:
       APP_PATH: /var/www/car-booking-app
       REMOTE: ${{secrets.DEPLOY_USER}}@${{secrets.DEPLOY_HOST}}
-      RELEASE: $(date +%Y%m%d-%H%M%S)-${{github.sha::7}}
+      RELEASE: $(date +%Y%m%d-%H%M%S)-${GITHUB_SHA::7}
 
     steps:
       - uses: actions/download-artifact@v4
