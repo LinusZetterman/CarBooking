@@ -38,7 +38,7 @@ jobs:
           cp -r build package.json package-lock.json release/
           cp -r deploy release/deploy
 
-      - uses: actions/upload-artifacts@4
+      - uses: actions/upload-artifact@4
         with:
           name: release
           path: release
