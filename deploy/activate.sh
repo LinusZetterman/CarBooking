@@ -22,4 +22,4 @@ mv -T "$APP_DIR/current.tmp" "$APP_DIR/current"
 
 # Restart pm2 with new program
 cd "$APP_DIR/current"
-pm2 startOrReload ecosystem.config.js --update-env
+pm2 startOrReload ecosystem.config.cjs --update-env
