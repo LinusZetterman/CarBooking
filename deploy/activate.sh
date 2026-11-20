@@ -17,7 +17,7 @@ RELEASE_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd -P)"
 ln -sfn "$SHARED_DIR/.env" "$RELEASE_DIR/.env"
 
 # Creates soft link
-ln -sfn "$RELEASE_DIR" APP_DIR/current.tmp
+ln -sfn "$RELEASE_DIR" "$APP_DIR/current.tmp"
 mv -T "$APP_DIR/current.tmp" "$APP_DIR/current"
 
 # Restart pm2 with new program
