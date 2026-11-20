@@ -73,4 +73,4 @@ jobs:
 
       - name: Activate release
         run: |
-          ssh $REMOTE "BASH $APP_PATH/releases/$RELEASE/deploy/activate.sh"
+          ssh $REMOTE "bash $APP_PATH/releases/$RELEASE/deploy/activate.sh"
