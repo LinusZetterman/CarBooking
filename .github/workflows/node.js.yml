@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: ['main']
+    branches: ['main', 'feature/actions-deployment-pipeline']
   pull_request:
-    branches: ['main']
+    branches: ['main', 'feature/actions-deployment-pipeline']
   workflow_dispatch: # <--- Enables action to be run with button
 
 jobs:
@@ -35,7 +35,7 @@ jobs:
       - name: Assemble release
         run: |
           mkdir release
-          cp -r build package.json package-lock.json release/
+          cp -r build package.json package-lock.json ecosystem.config.cjs release/
           cp -r deploy release/deploy
 
       - uses: actions/upload-artifact@v4
@@ -61,9 +61,18 @@ jobs:
       - name: Configure ssh
         run: |
           install -m 755 -d ~/.ssh
-          echo ${{secrets.DEPLOY_SSH_KEY}} > ~/.ssh/id_ed25519
+          echo "${{secrets.DEPLOY_SSH_KEY}}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          echo | ssh-keyscan -H ${{secrets.SSH_HOST}} >> ~/.ssh/known_hosts
+          echo | ssh-keyscan -H ${{secrets.DEPLOY_HOST}} >> ~/.ssh/known_hosts
 
-          echo success!
-          echo ~/.ssh/know_hosts
+      - name: Set release name
+        run: echo "RELEASE=$(date +%Y%m%d-%H%M%S)-${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+
+      - name: Upload release
+        run: |
+          ssh $REMOTE "mkdir -p $APP_PATH/releases/$RELEASE"
+          rsync --verbose -az --delete release/ $REMOTE:$APP_PATH/releases/$RELEASE/
+
+      - name: Activate release
+        run: |
+          ssh $REMOTE "bash $APP_PATH/releases/$RELEASE/deploy/activate.sh"
